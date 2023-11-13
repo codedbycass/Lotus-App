@@ -10,5 +10,5 @@ This application helps Lao immigrants and refugees living in the US on the path 
 - Users will receive notifications for their study time and pending citizenship date
 
 ## How it's made
-Tools: CSS, JavaScript, Node.js, Express, EJS, MongoDB
+Tools: CSS, JavaScript, Node.js, Express, EJS, MongoDB, Bootstrap
 

@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<html lang="en, lo"
+<head>
+    <title>Lotus Citizenship Account</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>Lotus 𖥸 Citizenship</h1>
+    <nav class="mainNav">
+      <a href="/profile">Home</a>
+      <a href="/about">About</a>
+      <a href="/account">My Account</a>
+      <a href="/logout">Logout</a> <!--class="btn btn-default btn-sm"-->
+    </nav>
+  </div>
+</header>
+<section>
+  <h2>Account</h2>
+  <p>Paragraph about you can customize your account!</p>
+  <% for (let i=0; i <personalization.length; i++) {%>
+    <li>
+      <span>Age:<%= personalization[i].age %></span>
+      <span>You feel comfortable speaking English:<%= personalization[i].lang %></span>
+      <span>You have been an a legal permanent resident for: <%= personalization[i].lpr %></span>
+      <span>You have public benefits: <%= personalization[i].pb %></span>
+      <span><button class="check">Done</button></span>
+      <span><button class="fa fa-trash" aria-hidden="true"></button></span>
+    </li>
+  <% } %>
+  </ul>
+  <form action="/account" method="POST">
+    <label for="age">How old are you?</label>
+    <select id ="age" name="age">
+      <option value="Yes">Under 18</option>
+      <option value="No">Over 18</option>
+      <option value="No">Over 50</option>
+      <option value="No">Over 55</option>
+      <option value="No">Over 65</option>
+    </select>
+    <label for="lang">Can you read or speak English?</label>
+    <select id ="lang" name="lang">
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+    <label for="lpr">How long have you been a legal permanent resident in the US?</label>
+    <select name="lpr" id="lpr" required>
+      <option value="Under 5 Years">Under 5 Years</option>
+      <option value="5 years or more">5 years or more</option>
+      <option value="15 years or more">15 years or more</option>
+      <option value="20 years or more">20 years or more</option>
+    </select>
+    <label for="pb">Do you have public benefits (SNAP/EBT, Medicaid, etc)?</label>
+    <select id ="pb" name="pb">
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+</section>
+
+<script src="main.js"></script>
+
+</body>
+</html>

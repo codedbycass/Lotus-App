@@ -1,4 +1,5 @@
 const { isBoolean } = require("lodash");
+const { ObjectID } = require("mongodb")
 
 module.exports = function(app, passport, db) {
 
@@ -21,6 +22,27 @@ module.exports = function(app, passport, db) {
           })
         })
     });
+// navigation bar ===============================================================
+
+    // ABOUT PAGE =========================
+    app.get('/about', function(req, res) {
+      res.render('about.ejs');
+    });
+
+    // HOME PAGE =========================
+    app.get('/profile', function(req, res) {
+    res.render('profile.ejs');
+    });
+
+    // MY ACCT PAGE =========================
+    app.get('/account', isLoggedIn, function (req, res) {
+      db.collection('personalization').find().toArray((err, result) => {
+        if (err) return console.log(err);
+        res.render('account.ejs', {
+          personalization: result
+        });
+      });
+    });
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -31,7 +53,7 @@ module.exports = function(app, passport, db) {
     });
 
 // profile page routes ===============================================================
-
+//AMERICAN GOVT QUESTIONS
 //this shows all the citizenship questions on DOM
     app.post('/messages', (req, res) => {
       db.collection('messages').save({question: req.body.question, answer: req.body.answer}, (err, result) => {
@@ -40,22 +62,40 @@ module.exports = function(app, passport, db) {
         res.redirect('/profile')
       })
     })
-//put operation: when users click the language button it will replace all the english flashcards with lao flashcards; event listener will need to be on lang-btn
-app.put('/messagesLao', (req, res) => {
-    db.collection('messages').findOneAndUpdate({questionlao: req.body.question, answerlao: req.body.answer}, (err, result) => {
-      if (err) return console.log(err)
-      
-      res.redirect('/profile')
-    })
-  })
-//Create operation on "My account" route /myaccount : users will input survey info. Based on this info, they can see if they qualify for the citizenship test; else they will be told conditions to qualify. Will be given a study plan regardless.
-app.post('/studyplan', (req, res) => {
-    db.collection('lotusAcct') // create a new collection that has user info name, age, greencard holder, public benefits, language
-    .save({name: req.body.name, age: req.body.age, LPRstatus: req.body.lpr, publicBenefits: req.body.pb, language: req.body.language})
+//PESONALIZAITON SURVEY
+//this shows all user inputs on DOM
+app.post('/account', (req, res) => {
+  db.collection('personalization')
+  .save({age: req.body.age, lang:req.body.lang, lpr: req.body.lpr, pb: req.body.pb}, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
-    res.redirect('/profile')
+    res.redirect('/account')
   })
+})
+//TRANSLATION UPDATE
+//an object appears in shell, but lao fields not replacing eng fields
+app.put('/messages', (req, res) => {
+  console.log("PUT request received");
+  console.log("Request body:", req.body);
+  db.collection('messages').findOneAndUpdate(
+      { _id: ObjectID(req.body._id) },
+      {
+          $set: {
+              question: req.body.questionlao,
+              answer: req.body.answerlao
+          }
+      },
+      { sort: { _id: -1 }, upsert: true },
+      (err, result) => {
+          if (err) {
+              console.error("Database update error:", err);
+              return res.send(err);
+          }
+          console.log("Database update result:", result);
+          res.send(result);
+      }
+  );
+});
 
 //currently can't think of a delete operation since users will not be deleting anything
 // =============================================================================

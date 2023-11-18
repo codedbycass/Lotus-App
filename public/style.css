@@ -65,28 +65,10 @@ h1 {
   margin-left: 2rem;
 }
 
-.flashcardNav a {
-  padding: 1rem 2rem;
-  font-size: 2rem;
-  background-color: var(--darkgreen);
-  color: var(--blue);
-  border-radius: 5%;
-}
 
+/* This area starts at the first h1*/
 .container.flashcard {
-  margin-top: 4rem;
-}
-
-.lang-btn {
-  align-content: flex-end;
-}
-
-.messages {
-  font-size: 1.8rem;
-}
-
-.messages li {
-  padding: 2rem 0;
+  margin-top: 5rem;
 }
 
 /* Header and nav */
@@ -145,5 +127,127 @@ main {
   padding-bottom: 4rem;
 }
 
+/* Flashcard nav */
+.flashcardNav a {
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  background-color: var(--darkgreen);
+  color: var(--blue);
+  border-radius: 5%;
+}
+
+/* Card Area https://codepen.io/butlerfuqua/pen/GYzWVv */
+
+.flashCardButtons {
+  display: flex;
+  justify-content: space-around;
+  margin: 4rem 20rem;;
+}
+
+.cardHolder{
+  /* position: relative; */
+  transform: translate(-15%, 0%);
+  height: 20rem;
+  width: 30rem;
+  margin: 5rem auto;
+}
+
+.card div{
+  width: 40rem;
+  height: 20rem;
+  padding: 6rem;
+  text-align: center;
+  cursor: pointer;
+}
+.card div.front,
+.card div.back,
+.card div.front.switched,
+.card div.back.switched {
+  background: var(--darkgreen);
+  color: white;
+  border-radius: 5px;
+}
+
+.card div.back,
+.card div.back.switched {
+  background: var(--lightgreen);
+  color:var(--darkgreen);
+  border-radius: 5px;
+}
+
+#translate {
+  margin-top: 20rem;
+}
+
+/* ANIMATION STYLES */
+.card div.back{
+  transform: rotateY(90deg);
+      position: absolute;
+}
+
+.card div.front{
+  position: absolute;
+}
 
 
+.card div.front.animate{
+  animation: twirl 0.2s ease-in forwards;
+}
+
+.card div.back.animate{
+  animation: twirl 0.2s 0.2s ease-out forwards reverse;
+}
+
+.card div.back.animateReverse{
+  animation: twirlReverse 0.2s ease-in forwards ;
+}
+.card div.front.animateReverse{
+  transform: rotateY(90deg);
+  animation: twirlReverse 0.2s 0.2s  ease-out forwards reverse;
+}
+
+/* Animation styles = switched */
+.card div.back.switched{
+  transform: rotateY(90deg);
+}
+
+.card div.front.switched{
+  position: absolute;
+}
+
+.card div.front.animate.switched{
+  animation: twirl 0.2s ease-in forwards;
+}
+
+.card div.back.animate.switched{
+  animation: twirl 0.2s 0.2s ease-out forwards reverse;
+}
+
+.card div.back.animateReverse.switched{
+  animation: twirlReverse 0.2s ease-in forwards ;
+}
+.card div.front.animateReverse.switched{
+  transform: rotateY(90deg);
+  animation: twirlReverse 0.2s 0.2s  ease-out forwards reverse;
+}
+
+/* Show / Hide Card styles */
+.hidden{
+  display: none;
+}
+
+
+
+@keyframes twirl{
+  0%{ transform: rotateY(0deg) }
+  100%{ transform: rotateY(90deg) }
+}
+
+@keyframes twirlReverse{
+  0%{ 
+    transform: rotateY(0deg) 
+    }
+  100%{ 
+    transform: rotateY(90deg) 
+    }
+}
